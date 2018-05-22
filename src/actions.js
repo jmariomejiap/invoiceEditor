@@ -7,21 +7,21 @@ const addNewItem = (itemData) => {
   return {
     type: ADD_NEW_ITEM,
     itemData,
-  }
-}
+  };
+};
 
 const removeItem = (position) => {
   return {
     type: REMOVE_ITEM,
     position,
-  }
-}
+  };
+};
 
 const calculateTotal = () => {
   return {
     type: CALCULATE_TAX_TOTAL,
-  }
-}
+  };
+};
 
 const submitItem = ({ item, qty, price }) => {
   const itemData = {
@@ -29,19 +29,20 @@ const submitItem = ({ item, qty, price }) => {
     qty,
     price,
     total: price * qty,
-  }
+  };
   return (dispatch) => {
-    dispatch(addNewItem(itemData))
+    dispatch(addNewItem(itemData));
     dispatch(calculateTotal());
-  }
+  };
 };
 
+// eslint-disable-next-line
 const deleteItem = (position) => {
   return (dispatch) => {
     dispatch(removeItem(position));
     dispatch(calculateTotal());
-  }
-}
+  };
+};
 
 
 export {
@@ -49,5 +50,5 @@ export {
   calculateTotal,
   deleteItem,
   addNewItem,
-  removeItem
+  removeItem,
 };

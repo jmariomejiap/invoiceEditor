@@ -39,4 +39,3 @@ test('should create an action to remove item', () => {
   };
   expect(removeItem(position)).toEqual(expectedAction);
 });
-
