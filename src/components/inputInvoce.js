@@ -13,8 +13,6 @@ import { submitItem } from './actions';
 
 const styles = {
   container: {
-    //height: 500,
-    // width: 200,
     textAlign: 'left',
     display: 'flex-inline',
     flexDirection: 'row',

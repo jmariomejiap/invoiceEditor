@@ -1,0 +1,69 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
+import TrashIcon from 'material-ui/svg-icons/action/delete';
+import { deleteItem } from '../actions';
+
+
+const Form = ({ listItems, dispatch }) => {
+  const handleRemove = (position) => {
+    console.log('position = ', position);
+    dispatch(deleteItem(position));
+  };
+
+  return (
+    <Table height="320px" >
+      <TableHeader
+        displaySelectAll={false}
+        adjustForCheckbox={false}
+      >
+        <TableRow >
+          <TableHeaderColumn>Item</TableHeaderColumn>
+          <TableHeaderColumn>Qty</TableHeaderColumn>
+          <TableHeaderColumn>Price</TableHeaderColumn>
+          <TableHeaderColumn>Total</TableHeaderColumn>
+          <TableHeaderColumn style={{ width: 15 }} />
+        </TableRow>
+      </TableHeader>
+      <TableBody displayRowCheckbox={false}>
+        {listItems.map((element, index) => (
+          /* eslint-disable-next-line */
+          <TableRow key={index}>
+            <TableRowColumn>{element.item}</TableRowColumn>
+            <TableRowColumn>{element.qty}</TableRowColumn>
+            <TableRowColumn>{`$${element.price}`}</TableRowColumn>
+            <TableHeaderColumn>{`$${element.total}`}</TableHeaderColumn>
+            <TableHeaderColumn style={{ width: 15 }}>
+              <TrashIcon
+                style={{ width: 18, height: 18 }}
+                onClick={() => handleRemove(index)}
+                hoverColor="red"
+              />
+            </TableHeaderColumn>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+};
+
+const mapStateToProps = (store) => {
+  return {
+    listItems: store.invoiceReducer.listItems,
+  };
+};
+
+Form.propTypes = {
+  listItems: PropTypes.array,
+  dispatch: PropTypes.func.isRequired,
+}
+
+export default connect(mapStateToProps)(Form);

@@ -44,4 +44,10 @@ const deleteItem = (position) => {
 }
 
 
-export { submitItem, calculateTotal, deleteItem };
+export {
+  submitItem,
+  calculateTotal,
+  deleteItem,
+  addNewItem,
+  removeItem
+};
