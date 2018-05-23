@@ -6,9 +6,8 @@ import { Divider } from 'material-ui';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ContentRemove from 'material-ui/svg-icons/content/remove';
-import { red500 } from 'material-ui/styles/colors';
 
-import { submitItem } from './actions';
+import { submitItem } from '../actions';
 
 
 const styles = {
@@ -38,7 +37,7 @@ class InputInvoice extends React.Component {
   };
 
   handleChangeQty = (event) => {
-    const value = event.target.value;
+    const { value } = event.target;
     if (isNaN(value)) {      
       return this.setState({ errorQty: 'please enter a number' });
     }
@@ -49,7 +48,7 @@ class InputInvoice extends React.Component {
   };
 
   handleChangePrice = (event) => {
-    const value = event.target.value;
+    const { value } = event.target;
     if (isNaN(value)) {
       return this.setState({ errorPrice: 'please enter a number' });
     }
@@ -79,7 +78,7 @@ class InputInvoice extends React.Component {
         item: '',
         qty: '',
         price: '',
-      })
+      });
     }
   };
 
@@ -144,4 +143,4 @@ class InputInvoice extends React.Component {
 };
 
 
-export default connect()(InputInvoice)
+export default connect()(InputInvoice);

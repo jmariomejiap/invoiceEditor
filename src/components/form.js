@@ -62,8 +62,8 @@ const mapStateToProps = (store) => {
 };
 
 Form.propTypes = {
-  listItems: PropTypes.array,
+  listItems: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
-}
+};
 
 export default connect(mapStateToProps)(Form);
