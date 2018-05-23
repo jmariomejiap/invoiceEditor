@@ -1,4 +1,6 @@
+/* eslint-disable react/jsx-boolean-value */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
@@ -15,6 +17,20 @@ const styles = {
     textAlign: 'left',
     display: 'flex-inline',
     flexDirection: 'row',
+  },
+  paper: {
+    padding: 10,
+    height: 330,
+    width: 330,
+    paddingRight: 20,
+    paddingLeft: 20,
+  },
+  buttonsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginTop: 10,
   },
 };
 
@@ -38,10 +54,11 @@ class InputInvoice extends React.Component {
 
   handleChangeQty = (event) => {
     const { value } = event.target;
-    if (isNaN(value)) {      
+    if (Number.isNaN(value)) {
       return this.setState({ errorQty: 'please enter a number' });
     }
-    this.setState({
+
+    return this.setState({
       qty: value,
       errorQty: '',
     });
@@ -49,10 +66,10 @@ class InputInvoice extends React.Component {
 
   handleChangePrice = (event) => {
     const { value } = event.target;
-    if (isNaN(value)) {
+    if (Number.isNaN(value)) {
       return this.setState({ errorPrice: 'please enter a number' });
     }
-    this.setState({
+    return this.setState({
       price: value,
       errorPrice: '',
     });
@@ -67,7 +84,7 @@ class InputInvoice extends React.Component {
         qty: '',
         price: '',
       });
-      return dispatch(submitItem({ item, qty, price }));
+      dispatch(submitItem({ item, qty, price }));
     }
   }
 
@@ -86,39 +103,39 @@ class InputInvoice extends React.Component {
   render() {
     return (
       <div style={styles}>
-        <Paper 
-          style={{ padding: 10, height: 330, width: 330, paddingRight: 20, paddingLeft: 20 }}
+        <Paper
+          style={styles.paper}
         >
           <h3>Add Item</h3>
-          <Divider/>
+          <Divider />
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <p style={{ width: 100 }}>Item: </p>
             <TextField
               fullWidth={true}
               id="text-field-controlled"
-              value={this.state.item}              
+              value={this.state.item}
               onChange={this.handleChangeItem}
             />
-          </div>          
+          </div>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <p style={{ width: 100 }}>Quantity : </p>
             <TextField
               id="text-field-controlled"
               value={this.state.qty}
-              errorText={this.state.errorQty}          
+              errorText={this.state.errorQty}
               onChange={this.handleChangeQty}
             />
-          </div>          
+          </div>
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <p style={{ width: 100 }}>Price : </p>
             <TextField
               id="text-field-controlled"
-              value={this.state.price}              
+              value={this.state.price}
               errorText={this.state.errorPrice}
               onChange={this.handleChangePrice}
             />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginTop: 10 }}>
+          <div style={styles.buttonsContainer}>
             <div>
               <FloatingActionButton
                 secondary={true}
@@ -129,7 +146,6 @@ class InputInvoice extends React.Component {
                 <ContentRemove />
               </FloatingActionButton>
             </div>
-            
             <FloatingActionButton
               onClick={this.handleSubmit}
             >
@@ -140,7 +156,10 @@ class InputInvoice extends React.Component {
       </div>
     );
   }
-};
+}
 
+InputInvoice.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default connect()(InputInvoice);
