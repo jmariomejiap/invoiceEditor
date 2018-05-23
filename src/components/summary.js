@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
   Table,
@@ -8,10 +9,10 @@ import {
 } from 'material-ui/Table';
 
 const styles = {
-  container: { 
+  container: {
     display: 'flex',
     justifyContent: 'flex-end',
-    margin: '10px 20px 0px 20px'
+    margin: '10px 20px 0px 20px',
   },
   summaryContainer: {
     width: 200,
@@ -21,7 +22,7 @@ const styles = {
     borderStyle: 'solid',
     borderRadius: 5,
   },
-}
+};
 
 const Summary = ({ subTotal, tax, total }) => (
   <div style={styles.container}>
@@ -38,12 +39,12 @@ const Summary = ({ subTotal, tax, total }) => (
           </TableRow>
           <TableRow>
             <TableRowColumn>Total</TableRowColumn>
-            <TableRowColumn>{total ? `$${total}` : '$'}</TableRowColumn>            
-          </TableRow>      
+            <TableRowColumn>{total ? `$${total}` : '$'}</TableRowColumn>
+          </TableRow>
         </TableBody>
       </Table>
-    </div>    
-  </div>      
+    </div>
+  </div>
 );
 
 const mapStateToProps = (store) => {
@@ -51,8 +52,14 @@ const mapStateToProps = (store) => {
     subTotal: store.invoiceReducer.subTotal,
     tax: store.invoiceReducer.tax,
     total: store.invoiceReducer.total,
-  }
+  };
 };
 
-export default connect(mapStateToProps)(Summary)
+Summary.propTypes = {
+  subTotal: PropTypes.number.isRequired,
+  tax: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+};
+
+export default connect(mapStateToProps)(Summary);
 

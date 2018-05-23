@@ -14,8 +14,8 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center',
-  }
-} 
+  },
+};
 
 const Invoice = () => (
   <div style={styles.mainContainer}>
@@ -23,9 +23,8 @@ const Invoice = () => (
     <div style={styles.invoiceContainer}>
       <FormContainer />
       <InputContainer />
-    </div>    
+    </div>
   </div>
-  
 );
- 
+
 export default Invoice;
