@@ -1,13 +1,17 @@
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import {
-  calculateTotal,
   CALCULATE_TAX_TOTAL,
-  addNewItem,
   ADD_NEW_ITEM,
-  removeItem,
   REMOVE_ITEM,
+  deleteItem,
+  submitItem,
 } from '../actions';
 
-test('should create an action to add new item', () => {
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+
+describe('actions are being dispatched', () => {
   const itemData = {
     item: 'apple',
     qty: 2,
@@ -15,27 +19,39 @@ test('should create an action to add new item', () => {
     total: 2.5 * 2,
   };
 
-  const expectedAction = {
-    type: ADD_NEW_ITEM,
-    itemData,
-  };
-  expect(addNewItem(itemData)).toEqual(expectedAction);
-});
+  const expectedAddActions = [
+    {
+      type: ADD_NEW_ITEM,
+      itemData,
+    },
+    {
+      type: CALCULATE_TAX_TOTAL,
+    },
+  ];
 
+  const expectedRemoveActions = [
+    {
+      type: REMOVE_ITEM,
+      position: 2,
+    },
+    {
+      type: CALCULATE_TAX_TOTAL,
+    },
+  ];
 
-test('should create an action to calculate total', () => {
-  const expectedAction = {
-    type: CALCULATE_TAX_TOTAL,
-  };
-  expect(calculateTotal()).toEqual(expectedAction);
-});
+  test('submitActions should dispatch, addNewItem and calculateTax', () => {
+    const store = mockStore({ });
+    store.dispatch(submitItem(itemData));
 
-test('should create an action to remove item', () => {
-  const position = 2;
+    const dispatchedActions = store.getActions();
+    expect(dispatchedActions).toEqual(expectedAddActions);
+  });
 
-  const expectedAction = {
-    type: REMOVE_ITEM,
-    position,
-  };
-  expect(removeItem(position)).toEqual(expectedAction);
+  test('deleteItem should dispatch, removeItem and calculateTax', () => {
+    const store = mockStore({ });
+    store.dispatch(deleteItem(2));
+
+    const dispatchedActions = store.getActions();
+    expect(dispatchedActions).toEqual(expectedRemoveActions);
+  });
 });
