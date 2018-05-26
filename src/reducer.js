@@ -3,9 +3,9 @@ import { ADD_NEW_ITEM, CALCULATE_TAX_TOTAL, REMOVE_ITEM } from './actions';
 
 const initalState = {
   listItems: [],
-  subTotal: null, // 3,
-  tax: null, // 0.015,
-  total: null, // 3.015
+  subTotal: null,
+  tax: null,
+  total: null,
 };
 
 
@@ -27,7 +27,7 @@ const invoiceReducer = (state = initalState, action) => {
     case CALCULATE_TAX_TOTAL:
       const subTotal = state.listItems.reduce((acc, item) => acc + item.total, 0);
       const tax = Number(((subTotal / 100) * 5).toFixed(2));
-      const total = subTotal + tax;
+      const total = Number((subTotal + tax).toFixed(2));
       return {
         ...state,
         subTotal,
