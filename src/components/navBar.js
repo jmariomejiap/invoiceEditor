@@ -3,7 +3,7 @@ import AppBar from 'material-ui/AppBar';
 
 const NavBar = () => (
   <AppBar
-    title="Invoce Demo"
+    title="Invoice Demo"
     showMenuIconButton={false}
   />
 );
