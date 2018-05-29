@@ -14,10 +14,7 @@ import { deleteItem } from '../actions';
 
 
 export const Form = ({ listItems, dispatch }) => {
-  const handleRemove = (position) => {
-    console.log('position = ', position);
-    dispatch(deleteItem(position));
-  };
+  const handleRemove = position => dispatch(deleteItem(position));
 
   return (
     <Table height="320px" >
