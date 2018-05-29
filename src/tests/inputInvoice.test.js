@@ -10,6 +10,20 @@ import { InputInvoice } from '../components/inputInvoice';
 
 Enzyme.configure({ adapter: new Adapter() });
 
+const mockData = {
+  incompleteState: {
+    item: 'banana',
+    qty: '',
+    price: 2,
+  },
+  state: {
+    item: 'banana',
+    qty: 5,
+    price: 2,
+  },
+};
+
+
 describe('InputInvoice component', () => {
   test('should render component.', () => {
     const dispatchSpy = jest.fn();
@@ -32,26 +46,12 @@ describe('InputInvoice component', () => {
     expect(inputWrapper.find(FloatingActionButton).length).toBe(2);
     expect(inputWrapper.find(FloatingActionButton).at(0).contains(<ContentRemove />)).toBe(true);
     expect(inputWrapper.find(FloatingActionButton).at(1).contains(<ContentAdd />)).toBe(true);
-    // console.log('find()', inputWrapper.find('div').at(1).find('p').text());
 
     // verify main props
     expect(inputWrapper.find(FloatingActionButton).at(0).props().secondary).toBe(true);
     expect(inputWrapper.find(FloatingActionButton).at(0).props().mini).toBe(true);
-
-    // expect(inputWrapper.find(TableBody).length).toBe(1);
-    // expect(inputWrapper.find(TableRow).length).toBe(3);
-    // expect(inputWrapper.find(TableRowColumn).length).toBe(6);
-    // expect(inputWrapper.find(TableBody).props().displayRowCheckbox).toBe(false);
-    // const subTotalItem = inputWrapper.find(TableRowColumn);
-
-    // // verify placeholders to be empty
-    // expect(subTotalItem.at(0).contains(<TableRowColumn hoverable={false}>Subtotal</TableRowColumn>)).toBe(true);
-    // expect(subTotalItem.at(1).contains(<TableRowColumn hoverable={false}>$</TableRowColumn>)).toBe(true);
-    // expect(subTotalItem.at(2).contains(<TableRowColumn hoverable={false}>Tax (5%)</TableRowColumn>)).toBe(true);
-    // expect(subTotalItem.at(3).contains(<TableRowColumn hoverable={false}>$</TableRowColumn>)).toBe(true);
-    // expect(subTotalItem.at(4).contains(<TableRowColumn hoverable={false}>Total</TableRowColumn>)).toBe(true);
-    // expect(subTotalItem.at(5).contains(<TableRowColumn hoverable={false}>$</TableRowColumn>)).toBe(true);
   });
+
 
   test('clear button should clear values', () => {
     const dispatchSpy = jest.fn();
@@ -63,25 +63,18 @@ describe('InputInvoice component', () => {
     );
 
     // simulate state data.
-    inputWrapper.setState({
-      item: 'banana',
-      qty: 5,
-      price: 2,
-    });
+    inputWrapper.setState(mockData.state);
 
     expect(inputWrapper.find('#item-field').props().value).toBe('banana');
     expect(inputWrapper.find('#qty-field').props().value).toBe(5);
     expect(inputWrapper.find('#price-field').props().value).toBe(2);
-    // console.log('value before = ', inputWrapper.find('#item-field').props().value);
-    // console.log('find Clear button', inputWrapper.find(FloatingActionButton).at(0).simulate('click'));
 
     inputWrapper.find(FloatingActionButton).at(0).simulate('click');
     expect(inputWrapper.find('#item-field').props().value).toBe('');
     expect(inputWrapper.find('#qty-field').props().value).toBe('');
     expect(inputWrapper.find('#price-field').props().value).toBe('');
-
-    // console.log('value after = ', inputWrapper.find('#item-field').props().value);
   });
+
 
   test('should not submit if input data is incomplete.', () => {
     const dispatchSpy = jest.fn();
@@ -93,18 +86,101 @@ describe('InputInvoice component', () => {
     );
 
     // simulate state data.
-    inputWrapper.setState({
-      item: 'banana',
-      qty: '',
-      price: 2,
-    });
+    inputWrapper.setState(mockData.incompleteState);
 
     inputWrapper.find(FloatingActionButton).at(1).simulate('click');
-
     expect(dispatchSpy).toHaveBeenCalledTimes(0);
     expect(inputWrapper.find('#item-field').props().value).toBe('banana');
     expect(inputWrapper.find('#qty-field').props().value).toBe('');
     expect(inputWrapper.find('#price-field').props().value).toBe(2);
+  });
+
+
+  test('should successfully submit data and clear inputs', () => {
+    const dispatchSpy = jest.fn();
+
+    const inputWrapper = shallow(
+      <InputInvoice
+        dispatch={dispatchSpy}
+      />,
+    );
+
+    // simulate state data.
+    inputWrapper.setState(mockData.state);
+
+    expect(inputWrapper.find('#item-field').props().value).toBe('banana');
+    expect(inputWrapper.find('#qty-field').props().value).toBe(5);
+    expect(inputWrapper.find('#qty-field').props().errorText).toBe('');
+    expect(inputWrapper.find('#price-field').props().value).toBe(2);
+
+    inputWrapper.find(FloatingActionButton).at(1).simulate('click');
+
+    expect(dispatchSpy).toHaveBeenCalledTimes(1);
+    expect(inputWrapper.find('#item-field').props().value).toBe('');
+    expect(inputWrapper.find('#qty-field').props().value).toBe('');
+    expect(inputWrapper.find('#price-field').props().value).toBe('');
+  });
+
+
+  test('Entering numbers in Item name should display error message', () => {
+    const dispatchSpy = jest.fn();
+
+    const inputWrapper = shallow(
+      <InputInvoice
+        dispatch={dispatchSpy}
+      />,
+    );
+
+    inputWrapper.find('#item-field').simulate('change', { target: { value: 'banana' } });
+    expect(inputWrapper.find('#item-field').props().errorText).toBe('');
+    expect(inputWrapper.find('#item-field').props().value).toBe('banana');
+    inputWrapper.setState({ item: '', errorItem: '' });
+
+    inputWrapper.find('#item-field').simulate('change', { target: { value: 'bana4' } });
+
+    expect(inputWrapper.find('#item-field').props().value).not.toBe('bana4');
+    expect(inputWrapper.find('#item-field').props().errorText).toBe('names can only contain letters');
+  });
+
+
+  test('Entering non-numerical values for Qty should display error message', () => {
+    const dispatchSpy = jest.fn();
+
+    const inputWrapper = shallow(
+      <InputInvoice
+        dispatch={dispatchSpy}
+      />,
+    );
+
+    inputWrapper.find('#qty-field').simulate('change', { target: { value: 55 } });
+    expect(inputWrapper.find('#qty-field').props().errorText).toBe('');
+    expect(inputWrapper.find('#qty-field').props().value).toBe(55);
+    inputWrapper.setState({ qty: '', errorQty: '' });
+
+    inputWrapper.find('#qty-field').simulate('change', { target: { value: 'sad' } });
+    expect(inputWrapper.find('#qty-field').props().value).not.toBe('sad');
+    expect(inputWrapper.find('#qty-field').props().errorText).toBe('please enter a number');
+  });
+
+
+  test('Entering non-numerical values for Price should display error message', () => {
+    const dispatchSpy = jest.fn();
+
+    const inputWrapper = shallow(
+      <InputInvoice
+        dispatch={dispatchSpy}
+      />,
+    );
+
+    inputWrapper.find('#price-field').simulate('change', { target: { value: 55 } });
+    expect(inputWrapper.find('#price-field').props().errorText).toBe('');
+    expect(inputWrapper.find('#price-field').props().value).toBe(55);
+    inputWrapper.setState({ qty: '', errorQty: '' });
+
+    inputWrapper.find('#price-field').simulate('change', { target: { value: 'sad' } });
+
+    expect(inputWrapper.find('#price-field').props().value).not.toBe('sad');
+    expect(inputWrapper.find('#price-field').props().errorText).toBe('please enter a number');
   });
 });
 

@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-boolean-value */
+/* eslint-disable  no-restricted-globals */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -43,20 +44,27 @@ export class InputInvoice extends React.Component {
       item: '',
       qty: '',
       price: '',
+      errorItem: '',
       errorQty: '',
       errorPrice: '',
     };
   }
 
   handleChangeItem = (event) => {
-    this.setState({
-      item: event.target.value,
+    const { value } = event.target;
+    if (/\d/.test(value)) {
+      return this.setState({ errorItem: 'names can only contain letters' });
+    }
+
+    return this.setState({
+      item: value,
+      errorItem: '',
     });
   };
 
   handleChangeQty = (event) => {
     const { value } = event.target;
-    if (Number.isNaN(value)) {
+    if (isNaN(value)) {
       return this.setState({ errorQty: 'please enter a number' });
     }
 
@@ -68,7 +76,7 @@ export class InputInvoice extends React.Component {
 
   handleChangePrice = (event) => {
     const { value } = event.target;
-    if (Number.isNaN(value)) {
+    if (isNaN(value)) {
       return this.setState({ errorPrice: 'please enter a number' });
     }
     return this.setState({
@@ -90,16 +98,7 @@ export class InputInvoice extends React.Component {
     }
   }
 
-  handleClear = () => {
-    const { item, qty, price } = this.state;
-    if (item || qty || price) {
-      this.setState({
-        item: '',
-        qty: '',
-        price: '',
-      });
-    }
-  };
+  handleClear = () => this.setState({ item: '', qty: '', price: '' });
 
 
   render() {
@@ -116,6 +115,7 @@ export class InputInvoice extends React.Component {
               fullWidth={true}
               id="item-field"
               value={this.state.item}
+              errorText={this.state.errorItem}
               onChange={this.handleChangeItem}
             />
           </div>
