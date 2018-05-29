@@ -24,7 +24,7 @@ const styles = {
   },
 };
 
-const Summary = ({ subTotal, tax, total }) => (
+export const Summary = ({ subTotal, tax, total }) => (
   <div style={styles.container}>
     <div style={styles.summaryContainer}>
       <Table>

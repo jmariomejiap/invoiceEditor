@@ -10,7 +10,7 @@ Enzyme.configure({ adapter: new Adapter() });
 describe('NavBar component', () => {
   test('should render NavBar', () => {
     const NavBarComponent = shallow(<NavBar />);
-    // console.log('console = ', NavBarComponent.props());
+
     expect(NavBarComponent.find(AppBar).length).toBe(1);
     expect(NavBarComponent.props().title).toBe('Invoice Demo');
     expect(NavBarComponent.props().showMenuIconButton).toBeFalsy();

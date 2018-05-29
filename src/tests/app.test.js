@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import App from '../components/app';
 import NavBar from '../components/navBar';
 import FormContainer from '../components/formContainer';
-import InputContainer from '../components/inputInvoce';
+import InputContainer from '../components/inputInvoice';
 
 Enzyme.configure({ adapter: new Adapter() });
 

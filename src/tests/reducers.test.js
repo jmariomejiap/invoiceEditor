@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+import React from 'react';
 import reducer from '../reducer';
 import {
   CALCULATE_TAX_TOTAL,

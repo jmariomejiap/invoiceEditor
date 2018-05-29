@@ -11,7 +11,7 @@ const style = {
   flexDirection: 'row',
 };
 
-const InvoiceContainer = () => (
+const FormContainer = () => (
   <div style={style}>
     <Paper>
       <Form />
@@ -20,4 +20,4 @@ const InvoiceContainer = () => (
   </div>
 );
 
-export default InvoiceContainer;
+export default FormContainer;

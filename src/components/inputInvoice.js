@@ -2,10 +2,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
-import { Divider } from 'material-ui';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
+import {
+  Paper,
+  TextField,
+  Divider,
+  FloatingActionButton,
+} from 'material-ui';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ContentRemove from 'material-ui/svg-icons/content/remove';
 
@@ -34,7 +36,7 @@ const styles = {
   },
 };
 
-class InputInvoice extends React.Component {
+export class InputInvoice extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -112,7 +114,7 @@ class InputInvoice extends React.Component {
             <p style={{ width: 100 }}>Item: </p>
             <TextField
               fullWidth={true}
-              id="text-field-controlled"
+              id="item-field"
               value={this.state.item}
               onChange={this.handleChangeItem}
             />
@@ -120,7 +122,7 @@ class InputInvoice extends React.Component {
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <p style={{ width: 100 }}>Quantity : </p>
             <TextField
-              id="text-field-controlled"
+              id="qty-field"
               value={this.state.qty}
               errorText={this.state.errorQty}
               onChange={this.handleChangeQty}
@@ -129,7 +131,7 @@ class InputInvoice extends React.Component {
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <p style={{ width: 100 }}>Price : </p>
             <TextField
-              id="text-field-controlled"
+              id="price-field"
               value={this.state.price}
               errorText={this.state.errorPrice}
               onChange={this.handleChangePrice}

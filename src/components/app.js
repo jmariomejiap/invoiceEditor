@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBar from './navBar';
 import FormContainer from './formContainer';
-import InputContainer from './inputInvoce';
+import InputContainer from './inputInvoice';
 
 const styles = {
   mainContainer: {

@@ -13,7 +13,7 @@ import TrashIcon from 'material-ui/svg-icons/action/delete';
 import { deleteItem } from '../actions';
 
 
-const Form = ({ listItems, dispatch }) => {
+export const Form = ({ listItems, dispatch }) => {
   const handleRemove = (position) => {
     console.log('position = ', position);
     dispatch(deleteItem(position));
@@ -40,14 +40,14 @@ const Form = ({ listItems, dispatch }) => {
             <TableRowColumn>{element.item}</TableRowColumn>
             <TableRowColumn>{element.qty}</TableRowColumn>
             <TableRowColumn>{`$${element.price}`}</TableRowColumn>
-            <TableHeaderColumn>{`$${element.total}`}</TableHeaderColumn>
-            <TableHeaderColumn style={{ width: 15 }}>
+            <TableRowColumn>{`$${element.total}`}</TableRowColumn>
+            <TableRowColumn style={{ width: 15 }}>
               <TrashIcon
                 style={{ width: 18, height: 18 }}
                 onClick={() => handleRemove(index)}
                 hoverColor="red"
               />
-            </TableHeaderColumn>
+            </TableRowColumn>
           </TableRow>
         ))}
       </TableBody>
