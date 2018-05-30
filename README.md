@@ -22,10 +22,6 @@ install dependencies.
 ```
 $ npm install 
 ```
-or 
-```
-$ yarn install
-```
 
 If you want to run it locally.
 
