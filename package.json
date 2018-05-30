@@ -10,8 +10,8 @@
     "lint": "eslint src"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Mario Mejia <jmariomejiap@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
     "@material-ui/core": "^1.1.0",
     "babel-core": "^6.26.3",
@@ -56,5 +56,8 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ]
+  },
+  "engines": {
+    "node": "8.9.1"
   }
 }
