@@ -1,7 +1,7 @@
 {
   "name": "invoice-editor",
   "version": "1.0.0",
-  "description": "",
+  "description": "Basic editor that allows adding items and calculate subtotal, taxes and total.",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js --mode development",
