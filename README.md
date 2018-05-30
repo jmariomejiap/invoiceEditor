@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/jmariomejiap/invoiceEditor.svg?branch=master)](https://travis-ci.org/jmariomejiap/invoiceEditor)
 
-[![Coverage Status](https://coveralls.io/repos/jmariomejiap/invoiceEditor/badge.svg?branch=master)](https://coveralls.io/r/jmariomejiap/invoiceEditor?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/jmariomejiap/invoiceEditor/badge.svg?branch=master)](https://coveralls.io/github/jmariomejiap/invoiceEditor?branch=master)
 
 
 Basic editor that allows adding items and calculate subtotal, taxes and total. 
