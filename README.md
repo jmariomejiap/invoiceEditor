@@ -1,5 +1,8 @@
 # Invoice Editor
 
+[![Build Status](https://travis-ci.org/jmariomejiap/invoiceEditor.svg?branch=master)](https://travis-ci.org/jmariomejiap/invoiceEditor)
+
+
 Basic editor that allows adding items and calculate subtotal, taxes and total. 
 
 It was built using React, Material-ui, Redux. It was tested using Jest and Enzyme.
