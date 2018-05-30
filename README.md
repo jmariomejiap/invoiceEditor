@@ -23,7 +23,7 @@ First
 $ git clone https://github.com/jmariomejiap/invoiceEditor.git
 ```
 
-install dependencies.
+Install dependencies.
 ```
 $ npm install 
 ```
